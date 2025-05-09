@@ -4,13 +4,16 @@ from app import schemas
 app = FastAPI()
 items_db = []
 
+
 @app.get("/items")
-def list_items():
+def list_items1():
     return items_db
+
 
 @app.get("/items")
 def list_items() -> list:
     return items_db
+
 
 @app.get("/")
 def read_root():
@@ -24,10 +27,12 @@ def get_item(item_id: int):
             return item
     return {"error": "Item not found"}
 
+
 @app.post("/items")
 def create_item(item: schemas.Item):
     items_db.append(item.dict())
     return item
+
 
 @app.put("/items/{item_id}")
 def update_item(item_id: int, new_item: schemas.Item):
@@ -36,6 +41,7 @@ def update_item(item_id: int, new_item: schemas.Item):
             items_db[i] = new_item.dict()
             return new_item
     return {"error": "Item not found"}
+
 
 @app.delete("/items/{item_id}")
 def delete_item(item_id: int):
